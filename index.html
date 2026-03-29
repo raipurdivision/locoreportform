@@ -5,10 +5,6 @@
 
 
 
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,8 +24,9 @@
         .container { max-width: 1000px; margin: 0 auto; background: white; padding: 30px 40px; border-radius: 0 10px 10px 10px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
         .page { display: none; }
         .page.active { display: block; }
-        .header { text-align: center; margin-bottom: 22px; padding-bottom: 16px; border-bottom: 3px solid #003366; }
-        .header h1 { color: #003366; font-size: 28px; font-weight: bold; }
+        .header { text-align: center; margin-bottom: 22px; background: #003399; border-radius: 8px 8px 0 0; border-bottom: 4px solid #FFD700; padding: 0; overflow: hidden; }
+        .header h1 { color: #ffffff; font-size: 26px; font-weight: bold; padding: 14px 20px 6px 20px; margin: 0; }
+        .header .raipur-div-badge { display: block; background: #0022aa; color: #FFD700; font-size: 17px; font-weight: 800; padding: 8px 20px 12px 20px; letter-spacing: 3px; text-transform: uppercase; margin: 0; border-radius: 0; }
         .section { margin-bottom: 8px; padding: 0; background: #f8f9fa; border-radius: 8px; overflow: hidden; border: 2px solid #003366; }
         .section.case-details { background: transparent; border-radius: 8px; margin-bottom: 8px; border: 2px solid #003366; }
         .section-title { font-size: 14px; font-weight: bold; color: #003366; background: #808080; padding: 5px 10px; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; justify-content: space-between; border-radius: 8px 8px 0 0; }
@@ -96,12 +93,22 @@
         .photo-upload-label:hover { background: #0055aa; }
         .photo-upload-label input[type="file"] { display: none; }
         .photo-upload-hint { font-size: 12px; color: #777; }
-        .photo-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-        .photo-item { position: relative; border: 3px solid #FFD700; border-radius: 8px; overflow: hidden; background: #fff; box-shadow: 0 2px 8px rgba(255,215,0,0.3); display: flex; flex-direction: column; height: 100%; }
-        .photo-item img { width: 100%; height: 170px; object-fit: contain; display: block; background: #fff; padding: 5px; }
+        .photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .photo-item { position: relative; border: 3px solid #FFD700; border-radius: 8px; overflow: hidden; background: #fff; box-shadow: 0 2px 8px rgba(255,215,0,0.3); }
+        .photo-item .photo-img-wrap { width: 100%; height: 180px; background: #f4f4f4; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .photo-item img { width: 100%; height: 180px; object-fit: contain; display: block; background: #f4f4f4; }
         .photo-item-label { background: rgba(0,51,102,0.82); color: #fff; font-size: 11px; padding: 3px 8px; position: absolute; bottom: 0; left: 0; right: 0; text-align: center; }
-        .photo-description { width: 100%; padding: 8px; border: none; border-top: 1px solid #e0e0e0; font-size: 12px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; resize: vertical; min-height: 40px; background-color: #f8f9fa; color: #000; }
-        .photo-description:focus { outline: none; background-color: #fff; }
+        .photo-description { width: 100%; padding: 8px 10px; border: none; border-top: 2px solid #003366; font-size: 13px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; resize: vertical; min-height: 52px; background-color: #FFFEF0; color: #000; font-weight: 500; }
+        .photo-description:focus { outline: none; background-color: #fff; border-top-color: #FFD700; }
+        .photo-description::placeholder { color: #aaa; font-weight: 400; font-style: italic; }
+        /* Photo fullscreen overlay */
+        .photo-fullscreen { display:none; position:fixed; top:0;left:0;right:0;bottom:0; background:linear-gradient(135deg,#667eea 0%,#764ba2 100%); z-index:9999; overflow-y:auto; padding:20px; }
+        .photo-fullscreen.open { display:block; }
+        .photo-fs-inner { max-width:1000px; margin:0 auto; background:white; border-radius:10px; padding:24px 32px; box-shadow:0 10px 40px rgba(0,0,0,0.3); }
+        .photo-fs-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; padding-bottom:14px; border-bottom:3px solid #003366; }
+        .photo-fs-title { color:#003366; font-size:22px; font-weight:bold; }
+        .photo-fs-close { background:#dc3545; color:white; border:none; border-radius:8px; padding:8px 20px; font-size:14px; font-weight:700; cursor:pointer; transition:background 0.2s; }
+        .photo-fs-close:hover { background:#c82333; }
         .photo-remove-btn { position: absolute; top: 5px; right: 5px; background: rgba(220,53,69,0.9); color: white; border: none; border-radius: 50%; width: 22px; height: 22px; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; line-height: 1; }
         .photo-remove-btn:hover { background: #c82333; }
         .photo-empty { grid-column: 1 / -1; text-align: center; color: #aaa; font-size: 13px; padding: 40px 0; }
@@ -113,16 +120,11 @@
             .container { box-shadow: none !important; padding: 15px !important; border-radius: 0 !important; max-width: 100% !important; }
             .page { display: block !important; }
             .submit-btn, .signature-upload, .add-line-btn, .line-remove-btn, .photo-upload-zone, .photo-remove-btn, #textFormatToolbar, .no-pdf { display: none !important; }
-            input[type="text"], input[type="date"] { border: none !important; background: transparent !important; height: auto !important; padding: 2px 5px !important; color: #000 !important; }
+            input[type="text"], input[type="date"] { border: none !important; background: transparent !important; height: auto !important; }
             textarea { border: none !important; background: transparent !important; }
-            .textarea-mirror { color: #000 !important; font-size: 13px !important; padding: 2px 5px !important; }
             .photo-panel { display: block !important; }
             .photo-tab-btn { display: none !important; }
-            .photo-grid { display: grid !important; grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
-            .photo-item { page-break-inside: avoid !important; }
-            .photo-item img { object-fit: contain !important; max-width: 100% !important; height: auto !important; }
-            .section-title { background: #808080 !important; color: #003366 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-            .section { border: 2px solid #003366 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .section-title { background: #ccc !important; color: #000 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
             #photoPage { page-break-before: always; }
         }
         .text-format-toolbar { position: absolute; background: #003366; border-radius: 6px; padding: 8px; display: none; box-shadow: 0 4px 12px rgba(0,0,0,0.3); z-index: 1000; gap: 6px; }
@@ -132,17 +134,43 @@
         .format-btn.color-picker { padding: 2px; width: 40px; }
         .format-btn input[type="color"] { border: none; width: 100%; height: 100%; cursor: pointer; border-radius: 3px; }
         @media (max-width: 768px) { .lp-grid { grid-template-columns: 1fr; } .photo-grid { grid-template-columns: 1fr; } .container { padding: 20px; } }
+        /* ── Voice Typing ── */
+        .voice-bar { display:flex; align-items:center; justify-content:center; gap:14px; margin-bottom:14px; background:#eef3fa; border:2px solid #003366; border-radius:8px; padding:8px 16px; flex-wrap:wrap; }
+        .voice-bar span.vlabel { font-weight:600; color:#003366; font-size:13px; }
+        .voice-switch { position:relative; display:inline-block; width:46px; height:26px; }
+        .voice-switch input { opacity:0; width:0; height:0; }
+        .voice-slider { position:absolute; cursor:pointer; inset:0; background:#ccc; border-radius:26px; transition:.3s; }
+        .voice-slider:before { content:""; position:absolute; height:20px; width:20px; left:3px; bottom:3px; background:white; border-radius:50%; transition:.3s; }
+        input:checked + .voice-slider { background:#003366; }
+        input:checked + .voice-slider:before { transform:translateX(20px); }
+        .voice-status { font-weight:700; font-size:13px; color:#888; min-width:30px; }
+        .voice-status.voice-active { color:#00a040; }
+        .listening-indicator { display:none; background:#ff4444; color:white; font-size:11px; font-weight:700; padding:3px 10px; border-radius:12px; animation:blink-pulse 1s infinite; }
+        @keyframes blink-pulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
     </style>
 </head>
 <body>
     <div class="page-nav">
         <button class="page-nav-btn active" onclick="switchPage('reportPage', this)">📋 REPORT FORM</button>
-        <button class="page-nav-btn"        onclick="switchPage('photoPage',  this)">📷 PHOTO ATTACHMENTS</button>
+        <button class="page-nav-btn"        onclick="openPhotoFullscreen()">📷 PHOTO ATTACHMENTS</button>
     </div>
     <div class="container">
         <div class="page active" id="reportPage">
-            <div class="header"><h1>LOCO TROUBLE REPORT</h1><p style="margin:4px 0 0;font-size:1.1em;font-weight:bold;letter-spacing:1px;color:#003366;">RAIPUR DIVISION</p></div>
+            <div class="header">
+                <h1>LOCO TROUBLE REPORT</h1>
+                <div class="raipur-div-badge">RAIPUR DIVISION</div>
+            </div>
 
+
+            <div class="voice-bar no-pdf">
+                <span class="vlabel">🎤 Voice Typing:</span>
+                <label class="voice-switch">
+                    <input type="checkbox" id="voiceToggle" onchange="toggleVoiceTyping()">
+                    <span class="voice-slider"></span>
+                </label>
+                <span id="voiceStatus" class="voice-status">OFF</span>
+                <span id="listeningIndicator" class="listening-indicator">● LISTENING</span>
+            </div>
             <div id="draftStatus" class="draft-status"></div>
 
             <form id="locoReportForm">
@@ -159,18 +187,18 @@
                 <div class="section">
                     <div class="section-title"><span>LP &amp; Train Particulars</span></div>
                     <div class="section-body"><div class="lp-grid">
-                        <div class="form-group"><label for="lpName">LP NAME/HQ</label><input type="text" id="lpName" name="lpName"></div>
+                        <div class="form-group"><label for="lpNamehq">LP Name/HQ</label><input type="text" id="lpNamehq" name="lpNamehq"></div>
                         <div class="form-group"><label for="dop">Train No.</label><input type="text" id="trainno" name="trainno"></div>
-                        <div class="form-group"><label for="lpCmsId">LP CMS ID</label><input type="text" id="lpCmsId" name="lpCmsId"></div>
-                        <div class="form-group"><label for="trainNo">Loco No</label><input type="text" id="locono" name="locono"></div>
-                        <div class="form-group"><label for="bpcno">Grade</label><input type="text" id="grade" name="grade"></div>
-                        <div class="form-group"><label for="locono">Load</label><input type="text" id="load" name="load"></div>
-                        <div class="form-group"><label for="bpc%">DOP AS LP</label><input type="text" id="dopaslp" name="dopaslp"></div>
-                        <div class="form-group"><label for="grade">BPC Details</label><input type="text" id="bpcdetails" name="bpcdetails"></div>
-                        <div class="form-group"><label for="load">LP GCLI</label><input type="text" id="lpgcli" name="lpgcli"></div>
-                        <div class="form-group"><label for="GCLI">BPC DATE</label><input type="date" id="bpcdate" name="bpcdate"></div>
-                        <div class="form-group"><label for="alpCmsId">ALP Name/HQ</label><input type="text" id="alPnamehq" name="alpnamhq"></div>
-                        <div class="form-group"><label for="bpcDate">ALP CMS ID</label><input type="text" id="alpcmsid" name="alpcmsid"></div>
+                        <div class="form-group"><label for="dop">LP CMS ID</label><input type="text" id="lpcmsid" name="lpcmsid"></div>
+                        <div class="form-group"><label for="trainNo">Grade</label><input type="text" id="grade" name="trainNo"></div>
+                        <div class="form-group"><label for="bpcno">Loco No</label><input type="text" id="locono" name="locono"></div>
+                        <div class="form-group"><label for="locono">DOP AS LP</label><input type="text" id="doplp" name="doplp"></div>
+                        <div class="form-group"><label for="bpc%">Load</label><input type="text" id="load" name="load"></div>
+                        <div class="form-group"><label for="grade">LP Group CLI</label><input type="text" id="lpgcli" name="grade"></div>
+                        <div class="form-group"><label for="load">BPC Details</label><input type="text" id="bpcdetail" name="bpcdetails"></div>
+                        <div class="form-group"><label for="GCLI">ALP Name/HQ</label><input type="text" id="alpnamehq" name="alpnamehq"></div>
+                        <div class="form-group"><label for="bpcDate">BPC Date</label><input type="date" id="bpcDate" name="bpcDate"></div>
+                         <div class="form-group"><label for="dop">ALP CMS ID</label><input type="text" id="alpcmsid" name="alpcmsid"></div>
                         <div class="form-group"><label for="lastCounselling">LP Last Counselling</label><input type="date" id="lastCounselling" name="lastCounselling"></div>
                         <div class="form-group"><label for="schedule">Schedule</label><input type="text" id="schedule" name="schedule"></div>
                     </div></div>
@@ -180,31 +208,100 @@
                     <div class="section-body"><div class="expandable-container" id="logBookRemarks"><div class="expandable-line" data-index="1"><span class="line-number">1.</span><textarea class="line-input auto-resize" name="logBookRemarks_1" placeholder="Enter remark line 1"></textarea><button type="button" class="line-remove-btn" onclick="removeThisLine(this,'logBookRemarks')" title="Remove">−</button></div></div></div>
                 </div>
                 <div class="section">
-                    <div class="section-title"><span>DDS Message</span><div class="button-group"><button type="button" class="add-line-btn" onclick="addLine('ddsMessage')">+</button></div></div>
-                    <div class="section-body"><div class="expandable-container" id="ddsMessage"><div class="expandable-line" data-index="1"><span class="line-number">1.</span><textarea class="line-input auto-resize" name="ddsMessage_1" placeholder="Enter DDS message line 1"></textarea><button type="button" class="line-remove-btn" onclick="removeThisLine(this,'ddsMessage')" title="Remove">−</button></div></div></div>
+                    <div class="section-title"><span>DDS MESSAGE</span><div class="button-group"><button type="button" class="add-line-btn" onclick="addLine('ddsmessage')">+</button></div></div>
+                    <div class="section-body"><div class="expandable-container" id="ddsmessage"><div class="expandable-line" data-index="1"><span class="line-number">1.</span><textarea class="line-input auto-resize" name="ddsmessage_1" placeholder="Enter remark line 1"></textarea><button type="button" class="line-remove-btn" onclick="removeThisLine(this,'ddsmessage')" title="Remove">−</button></div></div></div>
                 </div>
+               
                 <div class="section">
                     <div class="section-title"><span>Chronology of Events</span><div class="button-group"><button type="button" class="add-line-btn" onclick="addLine('chronologyEvents')">+</button></div></div>
                     <div class="section-body"><div class="expandable-container" id="chronologyEvents"><div class="expandable-line" data-index="1"><span class="line-number">1.</span><textarea class="line-input auto-resize" name="chronologyEvents_1" placeholder="Enter event line 1"></textarea><button type="button" class="line-remove-btn" onclick="removeThisLine(this,'chronologyEvents')" title="Remove">−</button></div></div></div>
                 </div>
-                <div class="section">
+                
+                <div class="section" id="sectionObservation">
                     <div class="section-title"><span>Observation</span><div class="button-group"><button type="button" class="add-line-btn" onclick="addLine('observation')">+</button></div></div>
                     <div class="section-body"><div class="expandable-container" id="observation"><div class="expandable-line" data-index="1"><span class="line-number">1.</span><textarea class="line-input auto-resize" name="observation_1" placeholder="Enter observation line 1"></textarea><button type="button" class="line-remove-btn" onclick="removeThisLine(this,'observation')" title="Remove">−</button></div></div></div>
                 </div>
-                <div class="section">
+                <div class="section" id="sectionActionTaken">
                     <div class="section-title"><span>Action Taken</span><div class="button-group"><button type="button" class="add-line-btn" onclick="addLine('actionTaken')">+</button></div></div>
                     <div class="section-body"><div class="expandable-container" id="actionTaken"><div class="expandable-line" data-index="1"><span class="line-number">1.</span><textarea class="line-input auto-resize" name="actionTaken_1" placeholder="Enter action line 1"></textarea><button type="button" class="line-remove-btn" onclick="removeThisLine(this,'actionTaken')" title="Remove">−</button></div></div></div>
                 </div>
-                <div class="section">
+                <div class="section" id="sectionConclusion">
                     <div class="section-title"><span>Conclusion &amp; Responsibility</span><div class="button-group"><button type="button" class="add-line-btn" onclick="addLine('conclusion')">+</button></div></div>
                     <div class="section-body"><div class="expandable-container" id="conclusion"><div class="expandable-line" data-index="1"><span class="line-number">1.</span><textarea class="line-input auto-resize" name="conclusion_1" placeholder="Enter conclusion line 1"></textarea><button type="button" class="line-remove-btn" onclick="removeThisLine(this,'conclusion')" title="Remove">−</button></div></div></div>
                 </div>
-                <div class="signature-section">
+                <div class="signature-section" id="signatureSection">
                     <label style="font-weight:600;color:#003366;margin-bottom:0;">Report Prepared By:</label>
                     <div class="signature-box">
                         <label class="signature-upload">Upload Signature<input type="file" id="signatureFile" accept="image/*" onchange="previewSignature(event)"></label>
                         <div class="signature-preview" id="signaturePreview" style="display:none;"><img id="signatureImage" src="" alt="Signature"></div>
-                        <div class="form-group"><input type="text" class="cli-name-input" id="cliName" name="cliName" placeholder="Enter CLI NAME"></div>
+                        <div class="form-group" style="margin-top:8px;">
+                            <label style="font-size:12px;color:#003366;font-weight:600;margin-bottom:3px;display:block;">CLI NAME</label>
+                            <input list="cliNameOptions" type="text" class="cli-name-input" id="cliName" name="cliName" placeholder="Select or type CLI NAME" style="width:300px;height:42px;font-size:15px;font-weight:600;">
+                            <datalist id="cliNameOptions">
+                                <option value="A K REDDY/CLI/BIA">
+                                <option value="A.R.TARAM/CLI/BIA">
+                                <option value="ABDUL MOIN KHAN/CLI/BIA">
+                                <option value="AKHILESH KUMAR/CLI/BIA">
+                                <option value="AMIT KUMAR BANKURE/CLI/BIA">
+                                <option value="ANANT PRAKASH SHRIVASTAVA/CLI/BIA">
+                                <option value="ANIL KUMAR/CLI/BIA">
+                                <option value="ANKIT RAM KANT/CLI/BIA">
+                                <option value="AVON KUMAR SAHU/CLI/BIA">
+                                <option value="B B KUSHWAHA/CLI/BIA">
+                                <option value="B K HARMUKH/CLI/BIA">
+                                <option value="B. K. SAHA/CLI/BIA">
+                                <option value="B.K.SONI/CLI/BIA">
+                                <option value="BHARAT SINGH ATBHAIYYA/CLI/BIA">
+                                <option value="BHOLI CHAUDHARY/CLI/BIA">
+                                <option value="BIKRAMJIT KANRAR/CLI/BIA">
+                                <option value="CLI NAME/CLI/BIA">
+                                <option value="DEEPANNITA PUNTAMBEKAR/CLI/BIA">
+                                <option value="G. C. BISWAS/CLI/BIA">
+                                <option value="G. V. R. K. MADHU/CLI/BIA">
+                                <option value="GIRDHARI LAL/CLI/BIA">
+                                <option value="JAISHANKAR SHARMA/CLI/BIA">
+                                <option value="K P LAHARE/CLI/BIA">
+                                <option value="K. K. SAHU/CLI/BIA">
+                                <option value="KHUSAL SINGH/CLI/BIA">
+                                <option value="MAHESHWAR/CLI/BIA">
+                                <option value="MANOJ KUMAR SAO/CLI/BIA">
+                                <option value="MANSUKH LAL CHANDRAKAR/CLI/BIA">
+                                <option value="MOHIT KUMAR SWARNKAR/CLI/BIA">
+                                <option value="N. R. KARPAL/CLI/BIA">
+                                <option value="N.K. BHOI/CLI/BIA">
+                                <option value="P.K. PATEL/CLI/BIA">
+                                <option value="PANKAJ KUMAR SINGH/CLI/BIA">
+                                <option value="PAWAN KUMAR SINGH/CLI/BIA">
+                                <option value="RAJENDRA KUMAR/CLI/BIA">
+                                <option value="RAJENDRA SINGH/CLI/BIA">
+                                <option value="RAJNEESH BENERJEE/CLI/BIA">
+                                <option value="S K GAUTAM/CLI/BIA">
+                                <option value="S S HUSSAIN/CLI/BIA">
+                                <option value="S. C. RAI/CLI/BIA">
+                                <option value="S. K. SINGH/CLI/BIA">
+                                <option value="S. L. SONI/CLI/BIA">
+                                <option value="SANJAY KUMAR ROY/CLI/BIA">
+                                <option value="SANJEEV KUMAR SHARMA/CLI/BIA">
+                                <option value="SHAILENDRA SINGH/CLI/BIA">
+                                <option value="SUNDEEP KUMAR SHARMA/CLI/BIA">
+                                <option value="SUNIL KUMAR DEWANGAN/CLI/BIA">
+                                <option value="TEST ID/CLI/BIA">
+                                <option value="V.K. BHAGAT/CLI/BIA">
+                                <option value="VIJAY KUMAR ARYA/CLI/BIA">
+                                <option value="VIKAS SHENDE/CLI/BIA">
+                                <option value="VINAY KUMAR VINCHURE/CLI/BIA">
+                                <option value="VINAY PANTAWANE/CLI/BIA">
+                                <option value="Y. RAMU/CLI/BIA">
+                                <option value="OTHERS">
+                            </datalist>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="reportDateRow" class="report-date-row" style="display:flex;justify-content:flex-start;margin-top:6px;margin-bottom:6px;">
+                    <div style="background:#eef3fa;border:2px solid #003399;border-radius:8px;padding:6px 14px;display:flex;align-items:center;gap:10px;">
+                        <label for="reportDate" style="font-weight:700;color:#003399;font-size:13px;white-space:nowrap;margin:0;">📅 DATE:</label>
+                        <input type="date" id="reportDate" name="reportDate" style="height:30px;font-size:13px;font-weight:600;border:2px solid #003399;border-radius:5px;padding:2px 8px;background:#FFFEF0;color:#000;width:145px;">
                     </div>
                 </div>
 
@@ -225,8 +322,16 @@
                 <button type="button" class="submit-btn" onclick="printReport()" style="margin-top:10px;background:#6c3483;width:100%;">🖨️ PRINT / PRINT PREVIEW</button>
             </form>
         </div>
-        <div class="page" id="photoPage">
-            <div class="photo-page-header"><h2>📷 PHOTO ATTACHMENTS</h2></div>
+        <!-- photoPage removed - now in fullscreen overlay -->
+    </div>
+
+    <!-- ══ PHOTO FULLSCREEN OVERLAY ══ -->
+    <div class="photo-fullscreen" id="photoFullscreen">
+        <div class="photo-fs-inner">
+            <div class="photo-fs-header">
+                <span class="photo-fs-title">📷 PHOTO ATTACHMENTS</span>
+                <button class="photo-fs-close" onclick="closePhotoFullscreen()">✕ Close &amp; Return</button>
+            </div>
             <div class="photo-tabs">
                 <button class="photo-tab-btn active" onclick="switchPhotoTab(1,this)">Photo Set 1</button>
                 <button class="photo-tab-btn"        onclick="switchPhotoTab(2,this)">Photo Set 2</button>
@@ -235,17 +340,17 @@
             <div class="photo-tab-content">
                 <div class="photo-panel active" id="photoPanel1">
                     <div class="photo-panel-title">Photo Set 1</div>
-                    <div class="photo-upload-zone"><label class="photo-upload-label">＋ Add Photos<input type="file" accept="image/*" multiple onchange="addPhotos(1,this)"></label><span class="photo-upload-hint">Select one or more images — displayed 2 per row</span></div>
+                    <div class="photo-upload-zone"><label class="photo-upload-label">＋ Add Photos<input type="file" accept="image/*" multiple onchange="addPhotos(1,this)"></label><span class="photo-upload-hint">Select images — 6 per PDF page, 3 rows × 2 columns</span></div>
                     <div class="photo-grid" id="photoGrid1"><div class="photo-empty" id="photoEmpty1">No photos attached yet. Click "Add Photos" above.</div></div>
                 </div>
                 <div class="photo-panel" id="photoPanel2">
                     <div class="photo-panel-title">Photo Set 2</div>
-                    <div class="photo-upload-zone"><label class="photo-upload-label">＋ Add Photos<input type="file" accept="image/*" multiple onchange="addPhotos(2,this)"></label><span class="photo-upload-hint">Select one or more images — displayed 2 per row</span></div>
+                    <div class="photo-upload-zone"><label class="photo-upload-label">＋ Add Photos<input type="file" accept="image/*" multiple onchange="addPhotos(2,this)"></label><span class="photo-upload-hint">Select images — 6 per PDF page, 3 rows × 2 columns</span></div>
                     <div class="photo-grid" id="photoGrid2"><div class="photo-empty" id="photoEmpty2">No photos attached yet. Click "Add Photos" above.</div></div>
                 </div>
                 <div class="photo-panel" id="photoPanel3">
                     <div class="photo-panel-title">Photo Set 3</div>
-                    <div class="photo-upload-zone"><label class="photo-upload-label">＋ Add Photos<input type="file" accept="image/*" multiple onchange="addPhotos(3,this)"></label><span class="photo-upload-hint">Select one or more images — displayed 2 per row</span></div>
+                    <div class="photo-upload-zone"><label class="photo-upload-label">＋ Add Photos<input type="file" accept="image/*" multiple onchange="addPhotos(3,this)"></label><span class="photo-upload-hint">Select images — 6 per PDF page, 3 rows × 2 columns</span></div>
                     <div class="photo-grid" id="photoGrid3"><div class="photo-empty" id="photoEmpty3">No photos attached yet. Click "Add Photos" above.</div></div>
                 </div>
             </div>
@@ -262,6 +367,14 @@
         document.querySelectorAll('.page-nav-btn').forEach(b => b.classList.remove('active'));
         document.getElementById(pageId).classList.add('active');
         btn.classList.add('active');
+    }
+    function openPhotoFullscreen() {
+        document.getElementById('photoFullscreen').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+    function closePhotoFullscreen() {
+        document.getElementById('photoFullscreen').classList.remove('open');
+        document.body.style.overflow = '';
     }
     function switchPhotoTab(tabNum, btn) {
         document.querySelectorAll('.photo-panel').forEach(p => p.classList.remove('active'));
@@ -303,85 +416,66 @@
             const e=document.createElement('div'); e.className='photo-empty'; e.id='photoEmpty'+tabNum; e.textContent='No photos attached yet. Click "Add Photos" above.'; grid.appendChild(e);
         }
     }
-    function getImageDimensions(dataUrl) {
-        return new Promise((resolve) => {
-            const img = new Image();
-            img.onload = function() {
-                resolve({ width: this.width, height: this.height });
-            };
-            img.src = dataUrl;
-        });
-    }
-
-    function calculateFitDimensions(imgW, imgH, boxW, boxH) {
-        const imgRatio = imgW / imgH;
-        const boxRatio = boxW / boxH;
-        let finalW, finalH;
-
-        if (imgRatio > boxRatio) {
-            // Image is wider - fit to width
-            finalW = boxW;
-            finalH = boxW / imgRatio;
-        } else {
-            // Image is taller - fit to height
-            finalH = boxH;
-            finalW = boxH * imgRatio;
-        }
-
-        return { width: finalW, height: finalH };
-    }
-
     async function addPhotoPagesToPDF(pdf) {
-        const PW=210,PH=297,margin=5,cellW=(PW-margin*3)/2,cellH=70,rowGap=6,topStart=20,imgPadding=2;
-        const availableW = cellW - imgPadding*2;
-        const availableH = cellH - imgPadding*2;
+        // 6 photos per page: 3 rows × 2 columns
+        const PW=210, PH=297, margin=8;
+        const cellW=(PW-margin*3)/2;
+        const cellH=52;
+        const descH=12;
+        const rowGap=4;
+        const rowTotal=cellH+descH+rowGap;
+        const topStart=22;
+        const photosPerPage=6;
         let hasPhotos=false;
-
         for (let tab=1;tab<=3;tab++) {
             const photos=photoStore[tab];
             if (!photos.length) continue;
-            hasPhotos=true; pdf.addPage();
-            pdf.setFontSize(13); pdf.setFont(undefined,'bold'); pdf.setTextColor(0,51,102);
-            pdf.text('Photo Set '+tab,margin,14); pdf.setDrawColor(0,51,102); pdf.line(margin,16,PW-margin,16);
-            let y=topStart;
-
+            hasPhotos=true;
             for (let i=0;i<photos.length;i+=2) {
-                if (y+cellH+20>PH-margin) { pdf.addPage(); y=margin; }
-
-                // Left photo
-                const left=photos[i];
-                const leftDims = await getImageDimensions(left.dataUrl);
-                const leftFit = calculateFitDimensions(leftDims.width, leftDims.height, availableW, availableH);
-                const leftX = margin + imgPadding + (availableW - leftFit.width) / 2;
-                const leftY = y + imgPadding + (availableH - leftFit.height) / 2;
-
-                // Draw border for left photo
-                pdf.setDrawColor(255,215,0); pdf.setLineWidth(1);
-                pdf.rect(margin,y,cellW,cellH);
-                // Add left photo centered and fitted
-                pdf.addImage(left.dataUrl,'JPEG',leftX,leftY,leftFit.width,leftFit.height,'','FAST');
-                pdf.setFontSize(8); pdf.setFont(undefined,'normal'); pdf.setTextColor(50,50,50);
-                pdf.text('Photo '+left.idx+': '+left.name,margin,y+cellH+4,{maxWidth:cellW});
-                if (left.description){pdf.setFontSize(7);pdf.setTextColor(80,80,80);pdf.text(left.description,margin,y+cellH+8,{maxWidth:cellW});}
-
-                // Right photo (if exists)
-                if (photos[i+1]) {
-                    const right=photos[i+1],x2=margin+cellW+margin;
-                    const rightDims = await getImageDimensions(right.dataUrl);
-                    const rightFit = calculateFitDimensions(rightDims.width, rightDims.height, availableW, availableH);
-                    const rightX = x2 + imgPadding + (availableW - rightFit.width) / 2;
-                    const rightY = y + imgPadding + (availableH - rightFit.height) / 2;
-
-                    // Draw border for right photo
-                    pdf.setDrawColor(255,215,0); pdf.setLineWidth(1);
-                    pdf.rect(x2,y,cellW,cellH);
-                    // Add right photo centered and fitted
-                    pdf.addImage(right.dataUrl,'JPEG',rightX,rightY,rightFit.width,rightFit.height,'','FAST');
-                    pdf.setFontSize(8);pdf.setFont(undefined,'normal');pdf.setTextColor(50,50,50);
-                    pdf.text('Photo '+right.idx+': '+right.name,x2,y+cellH+4,{maxWidth:cellW});
-                    if (right.description){pdf.setFontSize(7);pdf.setTextColor(80,80,80);pdf.text(right.description,x2,y+cellH+8,{maxWidth:cellW});}
+                const row=Math.floor(i/2) % 3;
+                if (i===0 || (Math.floor(i/2) % 3===0 && i>0)) {
+                    pdf.addPage();
+                    pdf.setFontSize(13); pdf.setFont(undefined,'bold'); pdf.setTextColor(0,51,102);
+                    // Blue header bar for photo pages
+                    pdf.setFillColor(0,51,204); pdf.rect(0,0,PW,18,'F');
+                    pdf.setFontSize(11); pdf.setFont(undefined,'bold'); pdf.setTextColor(255,255,255);
+                    pdf.text('RAIPUR DIVISION TROUBLE REPORT  |  Photo Set '+tab+' — Page '+(Math.floor(Math.floor(i/2)/3)+1), PW/2, 11, {align:'center'});
+                    pdf.setDrawColor(0,51,102); pdf.line(margin,18.5,PW-margin,18.5);
                 }
-                y+=cellH+rowGap+12;
+                const rowIdx=Math.floor(i/2) % 3;
+                const y=topStart+(rowIdx*rowTotal);
+                const left=photos[i];
+                (function(){
+                    var props=pdf.getImageProperties(left.dataUrl);
+                    var iw=props.width, ih=props.height;
+                    var scale=Math.min(cellW/iw, cellH/ih);
+                    var dw=iw*scale, dh=ih*scale;
+                    var ox=margin+(cellW-dw)/2, oy=y+(cellH-dh)/2;
+                    pdf.addImage(left.dataUrl,'JPEG',ox,oy,dw,dh,'','FAST');
+                })();
+                pdf.setFontSize(7.5); pdf.setFont(undefined,'bold'); pdf.setTextColor(0,51,102);
+                pdf.text('Photo '+left.idx,margin,y+cellH+4);
+                pdf.setDrawColor(200,200,200); pdf.setFillColor(255,254,240);
+                pdf.roundedRect(margin,y+cellH+5,cellW,descH-2,1,1,'FD');
+                pdf.setFontSize(7); pdf.setFont(undefined,'normal'); pdf.setTextColor(50,50,50);
+                pdf.text(left.description||'No description',margin+2,y+cellH+9.5,{maxWidth:cellW-4});
+                if (photos[i+1]) {
+                    const right=photos[i+1], x2=margin+cellW+margin;
+                    (function(){
+                        var props=pdf.getImageProperties(right.dataUrl);
+                        var iw=props.width, ih=props.height;
+                        var scale=Math.min(cellW/iw, cellH/ih);
+                        var dw=iw*scale, dh=ih*scale;
+                        var ox=x2+(cellW-dw)/2, oy=y+(cellH-dh)/2;
+                        pdf.addImage(right.dataUrl,'JPEG',ox,oy,dw,dh,'','FAST');
+                    })();
+                    pdf.setFontSize(7.5); pdf.setFont(undefined,'bold'); pdf.setTextColor(0,51,102);
+                    pdf.text('Photo '+right.idx,x2,y+cellH+4);
+                    pdf.setDrawColor(200,200,200); pdf.setFillColor(255,254,240);
+                    pdf.roundedRect(x2,y+cellH+5,cellW,descH-2,1,1,'FD');
+                    pdf.setFontSize(7); pdf.setFont(undefined,'normal'); pdf.setTextColor(50,50,50);
+                    pdf.text(right.description||'No description',x2+2,y+cellH+9.5,{maxWidth:cellW-4});
+                }
             }
         }
         return hasPhotos;
@@ -389,7 +483,7 @@
     function autoResize(ta) { ta.style.height='24px'; ta.style.height=ta.scrollHeight+'px'; }
     function initAutoResize(ta) { ta.style.height='24px'; ta.addEventListener('input',function(){autoResize(this);}); }
     document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('textarea.auto-resize').forEach(initAutoResize);});
-    const lineCounters = { briefHistory:1, logBookRemarks:1, ddsMessage:1, chronologyEvents:1, observation:1, actionTaken:1, conclusion:1 };
+    const lineCounters = { briefHistory:1, logBookRemarks:1, ddsmessage:1, chronologyEvents:1, observation:1, actionTaken:1, conclusion:1 };
     function addLine(sectionId) {
         lineCounters[sectionId]++;
         const container=document.getElementById(sectionId), lineNumber=lineCounters[sectionId];
@@ -417,11 +511,6 @@
         // Show all pages and photo panels
         document.querySelectorAll('.page').forEach(p => p.classList.add('active'));
         document.querySelectorAll('.photo-panel').forEach(p => p.classList.add('active'));
-
-        // Add pdf-mode class for consistent styling
-        const reportPage = document.getElementById('reportPage');
-        reportPage.classList.add('pdf-mode');
-
         // Swap textareas to readable divs
         const swaps = [];
         document.querySelectorAll('textarea.auto-resize').forEach(function(ta) {
@@ -433,27 +522,18 @@
             mirror.style.whiteSpace = 'pre-wrap';
             mirror.style.fontSize   = '13px';
             mirror.style.padding    = '2px 5px';
-            mirror.style.color = '#000';
             mirror.innerHTML = ta.value || '';
             ta.parentNode.insertBefore(mirror, ta);
             ta.style.display = 'none';
             swaps.push({ ta, mirror });
         });
-
         // Open print dialog
         window.print();
-
         // Restore textareas
         swaps.forEach(function({ ta, mirror }) { ta.style.display=''; mirror.parentNode.removeChild(mirror); });
-
-        // Remove pdf-mode class
-        reportPage.classList.remove('pdf-mode');
-
         // Restore active page
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        const m = document.querySelector('.page-nav-btn.active').getAttribute('onclick').match(/'(\w+)'/);
-        if (m) document.getElementById(m[1]).classList.add('active');
-
+        document.getElementById('reportPage').classList.add('active');
         // Restore active photo panel
         document.querySelectorAll('.photo-panel').forEach(p => p.classList.remove('active'));
         const activePhotoBtn = document.querySelector('.photo-tab-btn.active');
@@ -474,13 +554,10 @@
             document.querySelectorAll('#briefHistory textarea').forEach((ta,i)=>{if(ta.value.trim())rows.push([(i+1)+'. '+ta.value]);});
             rows.push([]);
             rows.push(['LP & TRAIN PARTICULARS']);
-            [['LP Name','lpName'],['LP CMS ID','lpCmsId'],['DOP','dop'],['Train No','trainNo'],['BPC No','bpcno'],['Loco No','locono'],['BPC %','bpc%'],['Grade','grade'],['Load','load'],['Group CLI Name','GCLI'],['ALP NAME/HQ','alpname'],['ALP CMS ID','alpCmsId'],['BPC Date','bpcDate'],['Last Counselling','lastCounselling'],['Schedule','schedule']].forEach(([l,id])=>{const el=document.getElementById(id);if(el&&el.value)rows.push([l,el.value]);});
+            [['LP Name','lpName'],['DOP','dop'],['Train No','trainNo'],['BPC No','bpcno'],['Loco No','locono'],['BPC %','bpc%'],['Grade','grade'],['Load','load'],['Group CLI Name','GCLI'],['BPC Date','bpcDate'],['Last Counselling','lastCounselling'],['Schedule','schedule']].forEach(([l,id])=>{const el=document.getElementById(id);if(el&&el.value)rows.push([l,el.value]);});
             rows.push([]);
             rows.push(['LOG BOOK REMARKS']);
             document.querySelectorAll('#logBookRemarks textarea').forEach((ta,i)=>{if(ta.value.trim())rows.push([(i+1)+'. '+ta.value]);});
-            rows.push([]);
-            rows.push(['DDS MESSAGE']);
-            document.querySelectorAll('#ddsMessage textarea').forEach((ta,i)=>{if(ta.value.trim())rows.push([(i+1)+'. '+ta.value]);});
             rows.push([]);
             rows.push(['CHRONOLOGY OF EVENTS']);
             document.querySelectorAll('#chronologyEvents textarea').forEach((ta,i)=>{if(ta.value.trim())rows.push([(i+1)+'. '+ta.value]);});
@@ -508,47 +585,146 @@
             const mirror=document.createElement('div'); mirror.className='textarea-mirror';
             if(ta.classList.contains('case-details-textarea')) mirror.classList.add('case-details-textarea');
             if(ta.classList.contains('line-input')) mirror.classList.add('line-input');
-            mirror.style.width=ta.offsetWidth+'px';
-            mirror.style.whiteSpace='pre-wrap';
-            mirror.style.fontSize='13px';
-            mirror.style.padding='2px 5px';
-            mirror.style.color='#000';
-            mirror.style.minHeight='18px';
-            mirror.innerHTML=ta.value || '';
+            mirror.style.width=ta.offsetWidth+'px'; mirror.style.whiteSpace='pre-wrap'; mirror.innerHTML=ta.value;
             ta.parentNode.insertBefore(mirror,ta); ta.style.display='none'; swaps.push({ta,mirror});
         });
         return swaps;
     }
     function restoreTextareas(swaps){swaps.forEach(function({ta,mirror}){ta.style.display='';mirror.parentNode.removeChild(mirror);});}
-    document.getElementById('locoReportForm').addEventListener('submit',async function(e){
+    document.getElementById('locoReportForm').addEventListener('submit', async function(e) {
         e.preventDefault();
-        const submitBtn=e.target.querySelector('.submit-btn'), originalTxt=submitBtn.textContent;
-        submitBtn.textContent='Generating PDF...'; submitBtn.disabled=true; let swaps=[];
+        const submitBtn = e.target.querySelector('.submit-btn'), originalTxt = submitBtn.textContent;
+        submitBtn.textContent = 'Generating PDF...'; submitBtn.disabled = true;
+        let swaps = [];
+        const buttons = document.querySelectorAll('.add-line-btn,.line-remove-btn,.submit-btn,.signature-upload,.voice-bar,.no-pdf');
         try {
-            const buttons=document.querySelectorAll('.add-line-btn,.line-remove-btn,.submit-btn,.signature-upload');
-            buttons.forEach(btn=>btn.style.display='none');
-            const content=document.getElementById('reportPage');
-            content.classList.add('pdf-mode'); swaps=swapTextareasForPDF();
-            await new Promise(r=>setTimeout(r,80));
-            const canvas=await html2canvas(content,{scale:3,useCORS:true,logging:false,backgroundColor:'#ffffff',windowWidth:1000,windowHeight:content.scrollHeight});
-            restoreTextareas(swaps); swaps=[];
-            const {jsPDF}=window.jspdf, pdf=new jsPDF('p','mm','a4');
-            const pdfW=210,pdfH=297,margin=5,contentWidth=pdfW-(2*margin);
-            const imgH=(canvas.height*contentWidth)/canvas.width;
-            let heightLeft=imgH, position=0;
-            pdf.addImage(canvas.toDataURL('image/png'),'PNG',margin,position,contentWidth,imgH,'','FAST');
-            heightLeft-=pdfH;
-            while(heightLeft>0){position=heightLeft-imgH;pdf.addPage();pdf.addImage(canvas.toDataURL('image/png'),'PNG',margin,position,contentWidth,imgH,'','FAST');heightLeft-=pdfH;}
+            buttons.forEach(btn => btn.style.display = 'none');
+            const content = document.getElementById('reportPage');
+            content.classList.add('pdf-mode');
+            swaps = swapTextareasForPDF();
+            await new Promise(r => setTimeout(r, 100));
+
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const pdfW = 210, pdfH = 297, margin = 5, contentWidth = pdfW - (2 * margin);
+
+            /* ── PAGE 1: everything up to & including Observation ── */
+            // Hide page-2 sections temporarily
+            const page2Sections = ['sectionActionTaken','sectionConclusion','signatureSection','reportDateRow'];
+            page2Sections.forEach(id => { const el=document.getElementById(id); if(el) el.style.display='none'; });
+
+            const canvas1 = await html2canvas(content, {
+                scale: 3, useCORS: true, logging: false,
+                backgroundColor: '#ffffff', windowWidth: 1000,
+                windowHeight: content.scrollHeight
+            });
+            const imgH1 = (canvas1.height * contentWidth) / canvas1.width;
+            // Fit page 1 content into first PDF page (scale down if taller than one page)
+            if (imgH1 <= pdfH) {
+                pdf.addImage(canvas1.toDataURL('image/png'), 'PNG', margin, margin, contentWidth, imgH1, '', 'FAST');
+            } else {
+                // Multi-page for page-1 content
+                let leftH = imgH1, pos = 0;
+                pdf.addImage(canvas1.toDataURL('image/png'), 'PNG', margin, pos, contentWidth, imgH1, '', 'FAST');
+                leftH -= pdfH;
+                while (leftH > 0) { pos = leftH - imgH1; pdf.addPage(); pdf.addImage(canvas1.toDataURL('image/png'), 'PNG', margin, pos, contentWidth, imgH1, '', 'FAST'); leftH -= pdfH; }
+            }
+
+            // Restore page-2 sections, hide page-1 sections for page 2 capture
+            page2Sections.forEach(id => { const el=document.getElementById(id); if(el) el.style.display=''; });
+
+            /* ── PAGE 2: Action Taken, Conclusion, Signature ── */
+            // Build a temporary wrapper with only page-2 elements
+            const page2Wrapper = document.createElement('div');
+            page2Wrapper.style.cssText = 'background:#fff;padding:10px 20px;width:960px;font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;';
+
+            // Header hidden on page 2 as requested
+            // const hdrClone = document.querySelector('#reportPage .header').cloneNode(true);
+            // page2Wrapper.appendChild(hdrClone);
+
+            // Continued label hidden (header hidden on page 2)
+            // const contLabel = document.createElement('div');
+            // contLabel.style.cssText = 'font-size:11px;color:#888;text-align:right;margin-bottom:6px;';
+            // contLabel.textContent = '— Continued —';
+            // page2Wrapper.appendChild(contLabel);
+
+            ['sectionActionTaken','sectionConclusion','signatureSection'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) page2Wrapper.appendChild(el.cloneNode(true));
+            });
+
+            // Add Report Date BELOW Conclusion & Responsibility section
+            const dateRowEl = document.querySelector('.report-date-row');
+            if (dateRowEl) {
+                const dateClone = dateRowEl.cloneNode(true);
+                dateClone.style.cssText = 'display:flex;justify-content:flex-start;margin-top:18px;margin-bottom:6px;';
+                const dateInput = dateClone.querySelector('input[type="date"]');
+                if (dateInput) {
+                    const rawVal = document.getElementById('reportDate').value;
+                    let displayVal = rawVal;
+                    if (rawVal) {
+                        const d = new Date(rawVal + 'T00:00:00');
+                        displayVal = d.toLocaleDateString('en-IN', {day:'2-digit', month:'short', year:'numeric'});
+                    }
+                    const span = document.createElement('span');
+                    span.style.cssText = 'font-size:16px;font-weight:700;color:#003399;padding:2px 8px;display:inline-flex;align-items:center;';
+                    span.textContent = displayVal || 'NOT SET';
+                    dateInput.parentNode.replaceChild(span, dateInput);
+                }
+                page2Wrapper.appendChild(dateClone);
+            }
+
+            document.body.appendChild(page2Wrapper);
+            const canvas2 = await html2canvas(page2Wrapper, {
+                scale: 3, useCORS: true, logging: false,
+                backgroundColor: '#ffffff', windowWidth: 1000,
+                windowHeight: page2Wrapper.scrollHeight
+            });
+            document.body.removeChild(page2Wrapper);
+
+            pdf.addPage();
+            const imgH2 = (canvas2.height * contentWidth) / canvas2.width;
+            if (imgH2 <= pdfH) {
+                pdf.addImage(canvas2.toDataURL('image/png'), 'PNG', margin, margin, contentWidth, imgH2, '', 'FAST');
+            } else {
+                let leftH = imgH2, pos = 0;
+                pdf.addImage(canvas2.toDataURL('image/png'), 'PNG', margin, pos, contentWidth, imgH2, '', 'FAST');
+                leftH -= pdfH;
+                while (leftH > 0) { pos = leftH - imgH2; pdf.addPage(); pdf.addImage(canvas2.toDataURL('image/png'), 'PNG', margin, pos, contentWidth, imgH2, '', 'FAST'); leftH -= pdfH; }
+            }
+
+            restoreTextareas(swaps); swaps = [];
             await addPhotoPagesToPDF(pdf);
-            pdf.save('Loco_Trouble_Report_'+new Date().toISOString().replace(/[:.]/g,'-').slice(0,-5)+'.pdf');
-            content.classList.remove('pdf-mode'); buttons.forEach(btn=>btn.style.display='');
-            submitBtn.textContent=originalTxt; submitBtn.disabled=false; alert('PDF generated successfully!');
-        } catch(err){
-            console.error(err); alert('Error generating PDF.');
-            if(swaps.length) restoreTextareas(swaps);
+
+            // ── ADD PAGE NUMBERS TO EVERY PAGE ──
+            const totalPages = pdf.getNumberOfPages();
+            for (let pg = 1; pg <= totalPages; pg++) {
+                pdf.setPage(pg);
+                pdf.setDrawColor(180, 180, 180);
+                pdf.line(margin, pdfH - 8, pdfW - margin, pdfH - 8);
+                pdf.setFontSize(9);
+                pdf.setFont(undefined, 'normal');
+                pdf.setTextColor(100, 100, 100);
+                pdf.text('RAIPUR DIVISION TROUBLE REPORT', margin, pdfH - 4);
+                pdf.text('Page ' + pg + ' of ' + totalPages, pdfW - margin, pdfH - 4, { align: 'right' });
+            }
+
+            pdf.save('Loco_Trouble_Report_' + new Date().toISOString().replace(/[:.]/g, '-').slice(0, -5) + '.pdf');
+
+            content.classList.remove('pdf-mode');
+            buttons.forEach(btn => btn.style.display = '');
+            submitBtn.textContent = originalTxt; submitBtn.disabled = false;
+            alert('✅ PDF generated successfully!\nPage 1: Case Details → Observation\nPage 2: Action Taken, Conclusion & Signature\nPage 3+: Photos (6 per page)');
+        } catch (err) {
+            console.error(err); alert('Error generating PDF: ' + err.message);
+            if (swaps.length) restoreTextareas(swaps);
             document.getElementById('reportPage').classList.remove('pdf-mode');
-            document.querySelectorAll('.add-line-btn,.line-remove-btn,.submit-btn,.signature-upload').forEach(btn=>btn.style.display='');
-            submitBtn.textContent=originalTxt; submitBtn.disabled=false;
+            buttons.forEach(btn => btn.style.display = '');
+            // Restore any hidden sections
+            ['sectionActionTaken','sectionConclusion','signatureSection'].forEach(id => {
+                const el = document.getElementById(id); if(el) el.style.display = '';
+            });
+            submitBtn.textContent = originalTxt; submitBtn.disabled = false;
         }
     });
 
@@ -781,7 +957,7 @@
         document.querySelectorAll('#reportPage input[type="text"], #reportPage input[type="date"], #reportPage textarea').forEach(function(f){ f.value = ''; if(f.classList.contains('auto-resize')) autoResize(f); });
         document.getElementById('signatureImage').src = '';
         document.getElementById('signaturePreview').style.display = 'none';
-        ['briefHistory','logBookRemarks','ddsMessage','chronologyEvents','observation','actionTaken','conclusion'].forEach(function(sid){
+        ['briefHistory','logBookRemarks','ddsmessage','chronologyEvents','observation','actionTaken','conclusion'].forEach(function(sid){
             var container = document.getElementById(sid);
             container.innerHTML = '';
             lineCounters[sid] = 1;
@@ -806,44 +982,97 @@
         var ds = document.getElementById('draftStatus');
         ds.className = 'draft-status';
     }
+
+        /* ═══════ VOICE TYPING ═══════ */
+        let recognition;
+        let isVoiceEnabled = false;
+        let currentFocusedElement = null;
+
+        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            recognition = new SpeechRecognition();
+            recognition.continuous = true;
+            recognition.interimResults = true;
+            recognition.lang = 'en-IN';
+
+            recognition.onstart = function() {
+                document.getElementById('listeningIndicator').style.display = 'inline';
+            };
+            recognition.onend = function() {
+                document.getElementById('listeningIndicator').style.display = 'none';
+                if (isVoiceEnabled) {
+                    setTimeout(() => {
+                        if (isVoiceEnabled) {
+                            try { recognition.start(); } catch(e) {}
+                        }
+                    }, 100);
+                }
+            };
+            recognition.onerror = function(event) {
+                if (event.error === 'no-speech' || event.error === 'aborted') return;
+                document.getElementById('listeningIndicator').style.display = 'none';
+            };
+            recognition.onresult = function(event) {
+                if (!currentFocusedElement) return;
+                let finalTranscript = '';
+                for (let i = event.resultIndex; i < event.results.length; i++) {
+                    if (event.results[i].isFinal) finalTranscript += event.results[i][0].transcript + ' ';
+                }
+                if (finalTranscript) {
+                    currentFocusedElement.value = (currentFocusedElement.value || '') + finalTranscript.toUpperCase();
+                    if (currentFocusedElement.classList.contains('auto-resize')) autoResize(currentFocusedElement);
+                }
+            };
+        }
+
+        function toggleVoiceTyping() {
+            const toggle = document.getElementById('voiceToggle');
+            const status = document.getElementById('voiceStatus');
+            isVoiceEnabled = toggle.checked;
+            if (isVoiceEnabled) {
+                if (recognition) {
+                    status.textContent = 'ON';
+                    status.classList.add('voice-active');
+                    showMessage('Voice typing enabled. Click any text field and speak.', 'success');
+                    setupVoiceListeners();
+                } else {
+                    toggle.checked = false;
+                    isVoiceEnabled = false;
+                    showMessage('Voice typing is not supported in your browser. Please use Chrome or Edge.', 'error');
+                }
+            } else {
+                status.textContent = 'OFF';
+                status.classList.remove('voice-active');
+                document.getElementById('listeningIndicator').style.display = 'none';
+                if (recognition) { try { recognition.stop(); } catch(e) {} }
+                removeVoiceListeners();
+                showMessage('Voice typing disabled.', 'success');
+            }
+        }
+
+        function setupVoiceListeners() {
+            document.querySelectorAll('input[type="text"], textarea').forEach(function(inp) {
+                inp.addEventListener('focus', handleInputFocus);
+            });
+        }
+        function removeVoiceListeners() {
+            document.querySelectorAll('input[type="text"], textarea').forEach(function(inp) {
+                inp.removeEventListener('focus', handleInputFocus);
+            });
+            currentFocusedElement = null;
+        }
+        function handleInputFocus(event) {
+            if (!isVoiceEnabled) return;
+            currentFocusedElement = event.target;
+            try { recognition.start(); } catch(e) {}
+        }
+
+        function showMessage(msg, type) {
+            const el = document.getElementById('draftStatus');
+            el.textContent = msg;
+            el.className = 'draft-status ' + type + ' show';
+            setTimeout(() => el.classList.remove('show'), 3500);
+        }
     </script>
-<!-- Code injected by live-server -->
-<script>
-	// <![CDATA[  <-- For SVG support
-	if ('WebSocket' in window) {
-		(function () {
-			function refreshCSS() {
-				var sheets = [].slice.call(document.getElementsByTagName("link"));
-				var head = document.getElementsByTagName("head")[0];
-				for (var i = 0; i < sheets.length; ++i) {
-					var elem = sheets[i];
-					var parent = elem.parentElement || head;
-					parent.removeChild(elem);
-					var rel = elem.rel;
-					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
-						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
-						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
-					}
-					parent.appendChild(elem);
-				}
-			}
-			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
-			var address = protocol + window.location.host + window.location.pathname + '/ws';
-			var socket = new WebSocket(address);
-			socket.onmessage = function (msg) {
-				if (msg.data == 'reload') window.location.reload();
-				else if (msg.data == 'refreshcss') refreshCSS();
-			};
-			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
-				console.log('Live reload enabled.');
-				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
-			}
-		})();
-	}
-	else {
-		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
-	}
-	// ]]>
-</script>
 </body>
 </html>
